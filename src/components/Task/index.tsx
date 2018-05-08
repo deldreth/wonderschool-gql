@@ -61,12 +61,23 @@ function Task ( { task, allTasks, loading, updateTask }: Props ) {
  * batch writes to cache?
  */
 function resolveParentLocks ( id: string,
-                              allTasks: TaskType[], 
+                              allTasks: TaskType[],
                               updateTask: Props['updateTask'] ) {
-  allTasks.forEach( parentTask => {
-    if ( parentTask.dependencyIds.includes( parseInt( id, 10 ) ) ) {
-      updateTask( { variables: { id: parentTask.id, completedAt: null } } );
-    }
+  const depends: string[] = [];
+  // Recurse the dependency graph
+  const parentIds = ( treeId: string ) => {
+    allTasks.forEach( task => {
+      if ( task.dependencyIds.includes( parseInt( treeId, 10 ) ) && !depends.includes( task.id ) && task.completedAt ) {
+        depends.push( task.id );
+        return parentIds( task.id );
+      }
+    } );
+  };
+  
+  parentIds( id );
+
+  depends.forEach( depend => {
+    updateTask( { variables: { id: depend, completedAt: null } } );
   } );
 }
 

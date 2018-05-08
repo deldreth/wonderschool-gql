@@ -3,6 +3,7 @@
 GraphQL based task management list. Data and a rudimentary generated schema for this application is loaded through `json-graphql-server` and is specifically loaded from `db.js`.
 
 ### Potential Improvement
+- [ ] resolveParentLocks' dependency graph generation be drastically improved with a better algorithm
 - [ ] Performance considerations for parent tree resolution for batch updates
 - [ ] Batch update mutations
 - [ ] Composed HOCs to avoid arrow functions in renders (TaskList)
