@@ -12,7 +12,8 @@ import withQuery from 'app/graph/withQuery';
 import { Icon, ListContainer, ListItem, Loading } from 'app/styles';
 import { Task } from 'app/types';
 
-interface ExternalProps {}
+interface ExternalProps {
+}
 
 export interface InjectedProps {
   allTasks: Task[];

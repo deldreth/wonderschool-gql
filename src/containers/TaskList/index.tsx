@@ -20,7 +20,7 @@ export interface InjectedProps {
 
 type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
 
-export default function TaskList ( { tasks, match }: Props ) {
+function TaskList ( { tasks, match }: Props ) {
   return (
     <ListContainer>
       
@@ -43,3 +43,5 @@ export default function TaskList ( { tasks, match }: Props ) {
     </ListContainer>
   );
 }
+
+export default compose<InjectedProps, ExternalProps>()( TaskList );
