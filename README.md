@@ -8,6 +8,7 @@ GraphQL based task management list. Data and a rudimentary generated schema for 
 - [ ] Composed HOCs to avoid arrow functions in renders (TaskList)
 - [ ] Structured graph dir as more types are added?
 - [ ] More informative loading states
+- [ ] Optimize production build
 
 # Get up and running
 ```
