@@ -113,12 +113,14 @@ interface TaskItemProps {
 }
 const TaskItem = styled<TaskItemProps, any>( ListItem )`
   color: ${ props => {
-    if ( props.locked || props.completed ) {
+    if ( props.locked ) {
       return '#BBBBBB';
     }
 
     return '#000000';
   } }
+
+  text-decoration: ${ props => props.completed ? 'line-through' : 'none' };
 
   &:hover {
     cursor: ${ props => props.locked ? 'default' : 'pointer' };
