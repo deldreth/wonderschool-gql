@@ -30,5 +30,3 @@ cd dist
 python -m SimpleHTTPServer 8000
 ```
 Navigate to `http://localhost:8000`
-
-engineering@wonderschool.com
