@@ -69,16 +69,13 @@ function resolveParentLocks ( id: string,
     allTasks.forEach( task => {
       if ( task.dependencyIds.includes( parseInt( treeId, 10 ) ) && !depends.includes( task.id ) && task.completedAt ) {
         depends.push( task.id );
+        updateTask( { variables: { id: task.id, completedAt: null } } );
         return parentIds( task.id );
       }
     } );
   };
   
   parentIds( id );
-
-  depends.forEach( depend => {
-    updateTask( { variables: { id: depend, completedAt: null } } );
-  } );
 }
 
 function resolveLocks ( dependencies: number[], allTasks: TaskType[] ): boolean {

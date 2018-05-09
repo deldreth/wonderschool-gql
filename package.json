@@ -6,6 +6,7 @@
   "scripts": {
     "start": "json-graphql-server db.js & webpack-serve --port 8000",
     "build": "webpack --env.production",
+    "prebuild": "yarn test",
     "server": "json-graphql-server db.js",
     "lint": "tslint --project . ",
     "test": "jest"
