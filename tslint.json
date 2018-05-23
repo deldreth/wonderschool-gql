@@ -4,6 +4,8 @@
     "no-console": false,
     "arrow-parens": false,
     "only-arrow-functions": false,
+    "arrow-return-shorthand": [true, "multiline"],
+    "no-unnecessary-callback-wrapper": true,
     "space-within-parens": [ true, 1 ],
     "space-before-function-paren": [ true, 1 ],
     "no-shadowed-variables": false,
@@ -18,9 +20,8 @@
     "no-empty-interface": false,
     "member-access": false,
     "max-classes-per-file": false,
-    "variable-name": [
-      "check-format"
-    ],
+    "no-unused-variable": true,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
     "quotemark": [
       true,
       "single",
