@@ -38,7 +38,7 @@ function TaskGroup ( { routeTo, aggregates }: Props ) {
     <ListContainer>
       <Query query={ ALL_GROUPS_QUERY } pollInterval={ 500 }>
         {
-          ( { loading, data: { allGroups } } ) => {
+          ( { loading, data: { allGroups }, refetch } ) => {
             if ( loading ) {
               return <Loading>...</Loading>;
             }
@@ -46,7 +46,8 @@ function TaskGroup ( { routeTo, aggregates }: Props ) {
             return [
               <AddHeader
                 key="group-add-header"
-                nextId={ allGroups.length + 1 } />,
+                nextId={ allGroups.length + 1 }
+                postAdd={ refetch }/>,
               allGroups.map( ( group: Group ) => (
                 <TaskGroupItem key={ group.id }
                   onClick={ routeTo( `/group/${group.id}` ) }>

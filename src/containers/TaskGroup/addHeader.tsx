@@ -23,11 +23,12 @@ interface InjectedProps {
 
 interface ExternalProps {
   nextId: number;
+  postAdd: () => void;
 }
 
 type Props = ExternalProps & InjectedProps;
 
-function AddHeader ( { nextId, adding, updateNewGroup, createGroup, isAdding, newGroup }: Props ) {
+function AddHeader ( { nextId, adding, updateNewGroup, createGroup, isAdding, newGroup, postAdd }: Props ) {
   if ( adding ) {
     return (
       <ListItem variant="header">
@@ -39,7 +40,8 @@ function AddHeader ( { nextId, adding, updateNewGroup, createGroup, isAdding, ne
               createGroup( { variables: {
                 id: nextId,
                 name: newGroup,
-              } } ); 
+              } } );
+              postAdd();
             }
           } }
           autoFocus/>
@@ -49,7 +51,8 @@ function AddHeader ( { nextId, adding, updateNewGroup, createGroup, isAdding, ne
             createGroup( { variables: {
               id: nextId,
               name: newGroup,
-            } } ); 
+            } } );
+            postAdd();
           }
         } }>
           <FontAwesomeIcon icon={ faPlus } />
