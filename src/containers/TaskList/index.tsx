@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
