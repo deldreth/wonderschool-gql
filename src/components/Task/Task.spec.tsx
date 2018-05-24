@@ -7,7 +7,10 @@ import { Task as TaskType } from 'app/types';
 it( 'should render a Task component', () => {
   const data: TaskType = {
     id: '1',
-    group: 'Purchases',
+    Group: {
+      id: '1',
+      name: 'Purchases',
+    },
     task: 'Go to the bank',
     dependencyIds: [1],
     completedAt: null,

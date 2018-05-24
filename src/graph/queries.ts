@@ -5,16 +5,36 @@ export const ALL_TASKS_QUERY = gql`
   {
     allTasks {
       id
-      group
       completedAt
       dependencyIds
+      Group {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const ALL_GROUPS_QUERY = gql`
+  {
+    allGroups {
+      id
+      name
+    }
+  }
+`;
+
+export const GROUP_NAME_QUERY = gql`
+  query groupName( $id: ID! ) {
+    Group( id: $id ) {
+      name
     }
   }
 `;
 
 export const GROUP_TASKS_QUERY = gql`
-  query allTasksByGroup($group: String!) {
-    allTasks(filter: { group: $group }) {
+  query allTasksByGroup($group: ID!) {
+    allTasks(filter: { group_id: $group }) {
       id
       task
       completedAt

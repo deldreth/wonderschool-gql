@@ -17,7 +17,10 @@ const allTasks: MockTask[] = [
   {
     __typename: 'Task',
     id: '1',
-    group: 'Purchases',
+    Group: {
+      id: '1',
+      name: 'Purchaes',
+    },
     task: 'Go to the bank',
     dependencyIds: [],
     completedAt: null,
@@ -25,7 +28,10 @@ const allTasks: MockTask[] = [
   {
     __typename: 'Task',
     id: '2',
-    group: 'Airplanes',
+    Group: {
+      id: '1',
+      name: 'Purchaes',
+    },
     task: 'Fly One',
     dependencyIds: [1],
     completedAt: null,

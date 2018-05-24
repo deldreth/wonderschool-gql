@@ -3,14 +3,18 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { compose, withHandlers, withProps } from 'recompose';
+import { compose, withHandlers, withProps, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
 
-import { ALL_TASKS_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
+import { ADD_GROUP_MUTATION } from 'app/graph/mutations';
+import { ALL_GROUPS_QUERY, ALL_TASKS_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
+import withMutation from 'app/graph/withMutation';
 import withQuery from 'app/graph/withQuery';
 
 import { Icon, ListContainer, ListItem, Loading } from 'app/styles';
-import { Task } from 'app/types';
+import { Group, Task } from 'app/types';
+
+import AddHeader from './addHeader';
 
 interface ExternalProps {
 }
@@ -25,42 +29,55 @@ export interface InjectedProps {
       total: number,
     },
   };
-  groups: string[];
 }
 
-type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
+export type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
 
-function TaskGroup ( { allTasks, loading, routeTo, aggregates, groups }: Props ) {
-  if ( loading ) {
-    return (
-      <Loading>...</Loading>
-    );
-  }
-
+function TaskGroup ( { routeTo, aggregates }: Props ) {
   return (
     <ListContainer>
-      <ListItem variant="header">Things To Do</ListItem>
-      {
-        groups.map( group => (
-          <TaskGroupItem key={ group }
-            onClick={ routeTo( `/group/${group}` ) }>
-            <Icon>
-              <img src={ require( 'static/Group.svg' ) }/>
-            </Icon>
+      <Query query={ ALL_GROUPS_QUERY } pollInterval={ 500 }>
+        {
+          ( { loading, data: { allGroups } } ) => {
+            if ( loading ) {
+              return <Loading>...</Loading>;
+            }
 
-            <TaskGroupItemText>
-              { group }
-
-              <TaskGroupItemAggregate>
-                { aggregates[group].completed } OF { aggregates[group].total } TASKS COMPLETE
-              </TaskGroupItemAggregate>
-            </TaskGroupItemText>
-          </TaskGroupItem>
-        ) )
-      }
+            return [
+              <AddHeader
+                key="group-add-header"
+                nextId={ allGroups.length + 1 } />,
+              allGroups.map( ( group: Group ) => (
+                <TaskGroupItem key={ group.id }
+                  onClick={ routeTo( `/group/${group.id}` ) }>
+                  <Icon>
+                    <img src={ require( 'static/Group.svg' ) }/>
+                  </Icon>
+      
+                  <TaskGroupItemText>
+                    { group.name }
+      
+                    { ( aggregates && aggregates[group.name] ) ? 
+                      <Aggregate agg={ aggregates[group.name] }/>
+                    : null }
+                  </TaskGroupItemText>
+                </TaskGroupItem>
+              ) ),
+            ];
+          }
+        }
+      </Query>
     </ListContainer>
   );
 }
+
+function Aggregate ( { agg }: any ) {
+  return (
+    <TaskGroupItemAggregate>
+      { agg.completed } OF { agg.total } TASKS COMPLETE
+    </TaskGroupItemAggregate>
+  );
+} 
 
 export default compose<InjectedProps, ExternalProps>(
   withRouter,
@@ -70,33 +87,19 @@ export default compose<InjectedProps, ExternalProps>(
       return {};
     }
 
-    const groups: string[] = [];
-    allTasks.forEach( task => {
-      if ( !groups.includes( task.group ) ) {
-        groups.push( task.group );
-      }
-    } );
-
-    return { groups };
-  } ),
-  withProps( ( { allTasks, loading }: Props ) => {
-    if ( loading ) {
-      return {};
-    }
-
     const aggregates: Props['aggregates'] = {};
     allTasks.forEach( task => {    
-      if ( !aggregates.hasOwnProperty( task.group ) ) {
-        aggregates[ task.group ] = {
+      if ( !aggregates.hasOwnProperty( task.Group.name ) ) {
+        aggregates[ task.Group.name ] = {
           completed: 0,
           total: 0,
         };
       }
       
-      aggregates[ task.group ].completed += task.completedAt ? 1 : 0;
-      aggregates[ task.group ].total += 1;
+      aggregates[ task.Group.name ].completed += task.completedAt ? 1 : 0;
+      aggregates[ task.Group.name ].total += 1;
     } );
-
+    
     return { aggregates };
   } ),
   withHandlers( {

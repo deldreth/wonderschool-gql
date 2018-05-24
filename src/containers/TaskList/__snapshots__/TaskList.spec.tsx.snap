@@ -38,7 +38,7 @@ ShallowWrapper {
                                   "kind": "ObjectField",
                                   "name": Object {
                                     "kind": "Name",
-                                    "value": "group",
+                                    "value": "group_id",
                                   },
                                   "value": Object {
                                     "kind": "Variable",
@@ -121,7 +121,7 @@ ShallowWrapper {
                           "kind": "NamedType",
                           "name": Object {
                             "kind": "Name",
-                            "value": "String",
+                            "value": "ID",
                           },
                         },
                       },
@@ -138,7 +138,7 @@ ShallowWrapper {
               ],
               "kind": "Document",
               "loc": Object {
-                "end": 154,
+                "end": 153,
                 "start": 0,
               },
             },

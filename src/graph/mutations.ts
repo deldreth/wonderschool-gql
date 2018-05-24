@@ -4,9 +4,21 @@ export const UPDATE_TASK_MUTATION = gql`
   mutation updateTask($id: ID!, $completedAt: String) {
     updateTask(id: $id, completedAt:$completedAt) {
       id
-      group
       task
       completedAt
+      Group {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const ADD_GROUP_MUTATION = gql`
+  mutation createGroup( $id: ID!, $name: String! ) {
+    createGroup( id: $id, name: $name ) {
+      id
+      name
     }
   }
 `;

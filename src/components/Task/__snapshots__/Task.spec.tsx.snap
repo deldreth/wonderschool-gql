@@ -7,11 +7,14 @@ ShallowWrapper {
   Symbol(enzyme.__unrendered__): <Unknown
     task={
       Object {
+        "Group": Object {
+          "id": "1",
+          "name": "Purchases",
+        },
         "completedAt": null,
         "dependencyIds": Array [
           1,
         ],
-        "group": "Purchases",
         "id": "1",
         "task": "Go to the bank",
       }
@@ -30,11 +33,14 @@ ShallowWrapper {
     "nodeType": "class",
     "props": Object {
       "task": Object {
+        "Group": Object {
+          "id": "1",
+          "name": "Purchases",
+        },
         "completedAt": null,
         "dependencyIds": Array [
           1,
         ],
-        "group": "Purchases",
         "id": "1",
         "task": "Go to the bank",
       },
@@ -50,11 +56,14 @@ ShallowWrapper {
       "nodeType": "class",
       "props": Object {
         "task": Object {
+          "Group": Object {
+            "id": "1",
+            "name": "Purchases",
+          },
           "completedAt": null,
           "dependencyIds": Array [
             1,
           ],
-          "group": "Purchases",
           "id": "1",
           "task": "Go to the bank",
         },

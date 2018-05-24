@@ -3,10 +3,15 @@ import { DateTime } from 'luxon';
 
 export interface Task {
   id: string;
-  group: string;
+  Group: Group;
   task: string;
   dependencyIds: number[];
   completedAt?: DateTime;
+}
+
+export interface Group {
+  id: string;
+  name: string;
 }
 
 export interface StateCache {

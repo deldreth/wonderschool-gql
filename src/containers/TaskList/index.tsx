@@ -8,7 +8,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import compose from 'recompose/compose';
 import styled from 'styled-components';
 
-import { GROUP_TASKS_QUERY } from 'app/graph/queries';
+import { GROUP_NAME_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
 
 import Task from 'app/components/Task';
 import { ListContainer, ListItem, Loading } from 'app/styles';
@@ -25,8 +25,21 @@ type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
 function TaskList ( { tasks, match }: Props ) {
   return (
     <ListContainer>
-      
-      <ListItem variant="header">{ match.params.group }</ListItem>
+      <Query query={ GROUP_NAME_QUERY } variables={ { id: match.params.group } }>
+        {
+          ( { loading, data: { Group } } ) => {
+            if ( loading ) {
+              return <Loading>...</Loading>;
+            }
+
+            return (
+              <ListItem variant="header">
+                { Group.name }
+              </ListItem>
+            );
+          }
+        }
+      </Query>
 
       <Query query={ GROUP_TASKS_QUERY } variables={ { group: match.params.group } }>
         {

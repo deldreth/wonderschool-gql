@@ -1,3 +1,4 @@
+import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 export const ListContainer = styled.div`
@@ -7,10 +8,19 @@ export const ListContainer = styled.div`
 
 interface ListItemProps {
   variant?: string;
+  onClick?: ( event: SyntheticEvent<MouseEvent> ) => void;
 }
 export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
   display: flex;
   align-items: center;
+  justify-content: ${ props => {
+    switch ( props.variant ) {
+      case 'header':
+        return 'space-between';
+      default:
+        return 'flex-start';
+    }
+  } }
 
   height: 70px;
   border-bottom: thin solid lightgrey;
@@ -23,6 +33,16 @@ export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
         return '16px';
     }
   } }
+
+  input {
+    padding: 8px;
+    width: 100%;
+    margin-right: 16px;
+  }
+
+  .icon {
+    margin-left: 16px;
+  }
 `;
 
 export const Icon = styled.div`
