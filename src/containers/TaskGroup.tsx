@@ -36,71 +36,18 @@ export interface InjectedProps {
 
 export type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
 
-function TaskGroup ( { routeTo, aggregates }: Props ) {
-  return (
-    <ListContainer>
-      <Query query={ ALL_GROUPS_QUERY } pollInterval={ 500 }>
-        {
-          ( { loading, data: { allGroups }, refetch } ) => {
-            if ( loading ) {
-              return <Loading>...</Loading>;
-            }
-
-            return [
-              <Mutation
-                key="group-add-header"
-                mutation={ ADD_GROUP_MUTATION }>
-                { ( createGroup ) => (
-                  <InputHeader
-                    createMutationHandler={ createGroup }
-                    nextId={ allGroups.length + 1 }
-                    postAdd={ refetch }/>
-                ) }
-              </Mutation>,
-              allGroups.map( ( group: Group ) => (
-                <TaskGroupItem key={ group.id }
-                  onClick={ routeTo( `/group/${group.id}` ) }>
-                  <Icon icon={ faCaretRight } />
-      
-                  <TaskGroupItemText>
-                    { group.name }
-      
-                    <Aggregate
-                      aggregates={ aggregates }
-                      groupName={ group.name }/>
-                  </TaskGroupItemText>
-                </TaskGroupItem>
-              ) ),
-            ];
-          }
-        }
-      </Query>
-    </ListContainer>
-  );
-}
-
-const Aggregate = ( { aggregates, groupName }: any ) => {
-  if ( aggregates && aggregates[ groupName ] ) {
-    return (
-      <TaskGroupItemAggregate>
-        { aggregates[ groupName ].completed } of { aggregates[ groupName ].total } tasks complete
-      </TaskGroupItemAggregate>
-    );
+class TaskGroup extends React.Component<Props> {
+  routeTo = ( value: string )  => () => {
+    this.props.history.push( value );
   }
 
-  return null;
-};
-
-export default compose<InjectedProps, ExternalProps>(
-  withRouter,
-  withQuery( ALL_TASKS_QUERY ),
-  withProps( ( { allTasks, loading }: Props ) => {
-    if ( loading ) {
-      return {};
+  aggregates = ( groupName: string ) => {
+    if ( !this.props.allTasks ) {
+      return null;
     }
 
     const aggregates: Props['aggregates'] = {};
-    allTasks.forEach( task => {    
+    this.props.allTasks.forEach( task => {    
       if ( !aggregates.hasOwnProperty( task.Group.name ) ) {
         aggregates[ task.Group.name ] = {
           completed: 0,
@@ -112,13 +59,62 @@ export default compose<InjectedProps, ExternalProps>(
       aggregates[ task.Group.name ].total += 1;
     } );
     
-    return { aggregates };
-  } ),
-  withHandlers( {
-    routeTo: ( { history }: Props ) => ( value: string )  => () => {
-      history.push( value );
-    },
-  } ),
+    if ( aggregates[ groupName ] ) {
+      return (
+        <TaskGroupItemAggregate>
+          { aggregates[ groupName ].completed } of { aggregates[ groupName ].total } tasks complete
+        </TaskGroupItemAggregate>
+      );
+    }
+  
+    return null;
+  }
+
+  render () {
+    return (
+      <ListContainer>
+        <Query query={ ALL_GROUPS_QUERY } pollInterval={ 500 }>
+          {
+            ( { loading, data: { allGroups }, refetch } ) => {
+              if ( loading ) {
+                return <Loading>...</Loading>;
+              }
+  
+              return [
+                <Mutation
+                  key="group-add-header"
+                  mutation={ ADD_GROUP_MUTATION }>
+                  { ( createGroup ) => (
+                    <InputHeader
+                      createMutationHandler={ createGroup }
+                      nextId={ allGroups.length + 1 }
+                      postAdd={ refetch }/>
+                  ) }
+                </Mutation>,
+                allGroups.map( ( group: Group ) => (
+                  <TaskGroupItem key={ group.id }
+                    onClick={ this.routeTo( `/group/${group.id}` ) }>
+                    <Icon icon={ faCaretRight } />
+        
+                    <TaskGroupItemText>
+                      { group.name }
+        
+                      { this.aggregates( group.name ) }
+                    </TaskGroupItemText>
+                  </TaskGroupItem>
+                ) ),
+              ];
+            }
+          }
+        </Query>
+      </ListContainer>
+    );
+  }
+}
+
+export default compose<InjectedProps, ExternalProps>(
+  withRouter,
+  withQuery( ALL_TASKS_QUERY ),
 )( TaskGroup );
 
 const TaskGroupItem = ListItem.extend`
