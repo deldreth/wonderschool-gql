@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 
-import Task from 'app/components/Task';
-import { Task as TaskType } from 'app/types';
+import Task from '../src/components/Task';
+import { Task as TaskType } from '../src/types';
 
 it( 'should render a Task component', () => {
   const data: TaskType = {

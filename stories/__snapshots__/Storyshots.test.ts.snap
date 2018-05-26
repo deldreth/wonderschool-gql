@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Group Multiple groups, one new 1`] = `
+<div
+  className="sc-bwzfXH dhKoUn"
+>
+  <div
+    className="sc-ifAKCX bmKgXx"
+  >
+    ...
+  </div>
+</div>
+`;
+
+exports[`Storyshots Group New group 1`] = `
+<div
+  className="sc-bwzfXH dhKoUn"
+>
+  <div
+    className="sc-ifAKCX bmKgXx"
+  >
+    ...
+  </div>
+</div>
+`;
+
+exports[`Storyshots Group No groups 1`] = `
+<div
+  className="sc-bwzfXH dhKoUn"
+>
+  <div
+    className="sc-ifAKCX bmKgXx"
+  >
+    ...
+  </div>
+</div>
+`;
+
+exports[`Storyshots Group With aggregates 1`] = `
+<div
+  className="sc-bwzfXH dhKoUn"
+>
+  <div
+    className="sc-ifAKCX bmKgXx"
+  >
+    ...
+  </div>
+</div>
+`;
+
+exports[`Storyshots Task Completed 1`] = `
+<div
+  className="sc-ifAKCX bmKgXx"
+>
+  ...
+</div>
+`;
+
+exports[`Storyshots Task Locked 1`] = `
+<div
+  className="sc-ifAKCX bmKgXx"
+>
+  ...
+</div>
+`;
+
+exports[`Storyshots Task Unlocked 1`] = `
+<div
+  className="sc-ifAKCX bmKgXx"
+>
+  ...
+</div>
+`;

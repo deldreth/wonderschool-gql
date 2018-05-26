@@ -1,29 +1,18 @@
 import React from 'react';
 
-import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import compose from 'recompose/compose';
-import styled from 'styled-components';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { GROUP_NAME_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
 
+import { ListContainer, ListItem, Loading } from 'app/components/Styles';
 import Task from 'app/components/Task';
-import { ListContainer, ListItem, Loading } from 'app/styles';
 import { Task as TaskType } from 'app/types';
 
-interface ExternalProps {}
+export type Props = RouteComponentProps<any>;
 
-export interface InjectedProps {
-  tasks: TaskType[];
-}
-
-type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
-
-function TaskList ( { tasks, match }: Props ) {
-  return (
+const TaskList = ( { match }: Props ) =>
+  (
     <ListContainer>
       <Query query={ GROUP_NAME_QUERY } variables={ { id: match.params.group } }>
         {
@@ -57,6 +46,5 @@ function TaskList ( { tasks, match }: Props ) {
 
     </ListContainer>
   );
-}
 
-export default compose<InjectedProps, ExternalProps>()( TaskList );
+export default TaskList;

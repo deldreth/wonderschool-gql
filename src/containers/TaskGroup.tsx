@@ -1,20 +1,23 @@
 import React from 'react';
 
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { compose, withHandlers, withProps, withStateHandlers } from 'recompose';
+import { compose, withHandlers, withProps } from 'recompose';
 import styled from 'styled-components';
+
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ADD_GROUP_MUTATION } from 'app/graph/mutations';
 import { ALL_GROUPS_QUERY, ALL_TASKS_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
 import withMutation from 'app/graph/withMutation';
 import withQuery from 'app/graph/withQuery';
 
-import { Icon, ListContainer, ListItem, Loading } from 'app/styles';
+import Icon from 'app/components/Icon';
+import InputHeader from 'app/components/InputHeader';
+import { ListContainer, ListItem, Loading } from 'app/components/Styles';
 import { Group, Task } from 'app/types';
-
-import AddHeader from './addHeader';
 
 interface ExternalProps {
 }
@@ -44,23 +47,27 @@ function TaskGroup ( { routeTo, aggregates }: Props ) {
             }
 
             return [
-              <AddHeader
+              <Mutation
                 key="group-add-header"
-                nextId={ allGroups.length + 1 }
-                postAdd={ refetch }/>,
+                mutation={ ADD_GROUP_MUTATION }>
+                { ( createGroup ) => (
+                  <InputHeader
+                    createMutationHandler={ createGroup }
+                    nextId={ allGroups.length + 1 }
+                    postAdd={ refetch }/>
+                ) }
+              </Mutation>,
               allGroups.map( ( group: Group ) => (
                 <TaskGroupItem key={ group.id }
                   onClick={ routeTo( `/group/${group.id}` ) }>
-                  <Icon>
-                    <img src={ require( 'static/Group.svg' ) }/>
-                  </Icon>
+                  <Icon icon={ faCaretRight } />
       
                   <TaskGroupItemText>
                     { group.name }
       
-                    { ( aggregates && aggregates[group.name] ) ? 
-                      <Aggregate agg={ aggregates[group.name] }/>
-                    : null }
+                    <Aggregate
+                      aggregates={ aggregates }
+                      groupName={ group.name }/>
                   </TaskGroupItemText>
                 </TaskGroupItem>
               ) ),
@@ -72,13 +79,17 @@ function TaskGroup ( { routeTo, aggregates }: Props ) {
   );
 }
 
-function Aggregate ( { agg }: any ) {
-  return (
-    <TaskGroupItemAggregate>
-      { agg.completed } OF { agg.total } TASKS COMPLETE
-    </TaskGroupItemAggregate>
-  );
-} 
+const Aggregate = ( { aggregates, groupName }: any ) => {
+  if ( aggregates && aggregates[ groupName ] ) {
+    return (
+      <TaskGroupItemAggregate>
+        { aggregates[ groupName ].completed } of { aggregates[ groupName ].total } tasks complete
+      </TaskGroupItemAggregate>
+    );
+  }
+
+  return null;
+};
 
 export default compose<InjectedProps, ExternalProps>(
   withRouter,

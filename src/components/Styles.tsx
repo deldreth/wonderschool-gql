@@ -37,7 +37,6 @@ export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
   input {
     padding: 8px;
     width: 100%;
-    margin-right: 16px;
   }
 
   .icon {
@@ -46,7 +45,7 @@ export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
 `;
 
 export const Icon = styled.div`
-  margin-right: 22px;
+  margin-right: 16px;
   width: 30px;
   text-align: center;
 `;
