@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme';
-import React from 'react';
+import * as React from 'react';
 import { MockedProvider } from 'react-apollo/test-utils';
 
-import TaskList from '../src/containers/TaskList';
-import { GROUP_TASKS_QUERY } from '../src/graph/queries';
-import { Task as TaskType } from '../src/types';
+import TaskList from 'app/containers/TaskList';
+import { GROUP_TASKS_QUERY } from 'app/graph/queries';
+import { Task as TaskType } from 'app/types';
 
 it( 'should render a TaskList component', async () => {
   const mocks: any = [ {
@@ -33,7 +33,7 @@ it( 'should render a TaskList component', async () => {
 
   const wrapper = shallow(
     <MockedProvider mocks={ mocks }>
-      <TaskList />
+      <TaskList match={ null }/>
     </MockedProvider>,
   );
 

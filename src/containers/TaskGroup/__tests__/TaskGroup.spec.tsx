@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme';
-import React from 'react';
+import * as React from 'react';
 import { MockedProvider } from 'react-apollo/test-utils';
 
-import TaskGroup from '../src/containers/TaskGroup';
-import { ALL_TASKS_QUERY } from '../src/graph/queries';
-import { Task as TaskType } from '../src/types';
+import TaskGroup from 'app/containers/TaskGroup';
+import { ALL_TASKS_QUERY } from 'app/graph/queries';
+import { Task as TaskType } from 'app/types';
 
 it( 'should render a TaskGroup component', async () => {
   const mocks: any = [ {

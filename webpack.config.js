@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rules = [
   {
@@ -26,12 +27,10 @@ module.exports = env => {
     return {
       devtool: "eval",
       mode: 'development',
-      entry: [
-        'regenerator-runtime/runtime',
-        path.join( __dirname, 'src/index.tsx' )
-      ],
+      entry: {
+        app: path.join( __dirname, 'src/index.tsx' )
+      },
       output: {
-        filename: 'app.js',
         chunkFilename: '[name].chunk.js',
         publicPath: '/'
       },
@@ -44,15 +43,14 @@ module.exports = env => {
 
   return {
     mode: 'production',
-    entry: [
-      'regenerator-runtime/runtime',
-      path.join( __dirname, 'src/index.tsx' )
-    ],
+    entry: {
+      app: path.join( __dirname, 'src/index.tsx' ),
+      vendor: [ 'react', 'react-apollo' ],
+    },
     output: {
       path: path.join( __dirname, 'dist/' ),
-      filename: 'app.js',
-      chunkFilename: '[name].chunk.js',
-      publicPath: '/'
+      filename: "[name].bundle.js",
+      chunkFilename: "[name].chunk.js"
     },
     module: {
       rules,
@@ -61,7 +59,8 @@ module.exports = env => {
     plugins: [
       new HtmlWebpackPlugin( {
         template: 'index.html'
-      } )
+      } ),
+      new BundleAnalyzerPlugin()
     ],
   };
 };

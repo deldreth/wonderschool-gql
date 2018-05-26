@@ -1,8 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 
 import { faPlusCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { compose, withHandlers, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
 
 import Icon from 'app/components/Icon';
@@ -28,10 +27,9 @@ export default class InputHeader extends React.Component<Props> {
     this.setState( { adding: !this.state.adding } );
   }
 
-  onCreateItem = ( event: React.MouseEvent<HTMLDivElement> & React.KeyboardEvent<HTMLInputElement> ) => {
+  onCreateItem = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
     const { nextItemValue } = this.state;
-    if ( nextItemValue && nextItemValue !== '' &&
-         ( event.type === 'click' || event.key === 'Enter' ) ) {
+    if ( nextItemValue && nextItemValue !== '' && event.key === 'Enter' ) {
       this.props.createMutationHandler( { variables: {
         id: this.props.nextId,
         name: nextItemValue,
@@ -39,6 +37,19 @@ export default class InputHeader extends React.Component<Props> {
 
       this.setState( { nextItemValue: ''} );
       
+      this.props.postAdd();
+    }
+  }
+
+  onAddClick = ( event: React.MouseEvent<HTMLDivElement> ) => {
+    const { nextItemValue } = this.state;
+    if ( nextItemValue && nextItemValue !== '' ) {
+      this.props.createMutationHandler( { variables: {
+        id: this.props.nextId,
+        name: nextItemValue,
+      } } );
+
+      this.setState( { nextItemValue: ''} );
       this.props.postAdd();
     }
   }
@@ -57,7 +68,7 @@ export default class InputHeader extends React.Component<Props> {
           <Icon
             variant="right"
             icon={ faPlusCircle }
-            onClick={ this.onCreateItem } />
+            onClick={ this.onAddClick } />
 
           <Icon
             variant="right"

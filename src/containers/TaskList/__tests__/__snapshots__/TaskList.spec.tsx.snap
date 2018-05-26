@@ -171,7 +171,9 @@ ShallowWrapper {
       ]
     }
   >
-    <TaskList />
+    <TaskList
+      match={null}
+    />
   </MockedProvider>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -185,7 +187,9 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "class",
     "props": Object {
-      "children": <TaskList />,
+      "children": <TaskList
+        match={null}
+      />,
       "client": ApolloClient {
         "cache": InMemoryCache {
           "addTypename": true,
@@ -240,7 +244,9 @@ ShallowWrapper {
       "instance": null,
       "key": undefined,
       "nodeType": "function",
-      "props": Object {},
+      "props": Object {
+        "match": null,
+      },
       "ref": null,
       "rendered": null,
       "type": [Function],
@@ -253,7 +259,9 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "class",
       "props": Object {
-        "children": <TaskList />,
+        "children": <TaskList
+          match={null}
+        />,
         "client": ApolloClient {
           "cache": InMemoryCache {
             "addTypename": true,
@@ -308,7 +316,9 @@ ShallowWrapper {
         "instance": null,
         "key": undefined,
         "nodeType": "function",
-        "props": Object {},
+        "props": Object {
+          "match": null,
+        },
         "ref": null,
         "rendered": null,
         "type": [Function],

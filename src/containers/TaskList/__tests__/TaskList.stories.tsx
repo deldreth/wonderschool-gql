@@ -1,13 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { DateTime } from 'luxon';
 import { MockedProvider } from 'react-apollo/test-utils';
 
-import Task from '../src/components/Task';
-import { ALL_TASKS_QUERY } from '../src/graph/queries';
-import { Group as GroupType, Task as TaskType } from '../src/types';
-import { allGroups, allTasks } from './mocks';
+import Task from 'app/components/Task';
+import { ALL_TASKS_QUERY } from 'app/graph/queries';
+import { Group as GroupType, Task as TaskType } from 'app/types';
+import { allGroups, allTasks } from './data';
 
 const stories = storiesOf( 'Task', module );
 
@@ -25,7 +25,7 @@ stories.add( 'Locked', () => {
 
   return (
     <MockedProvider mocks={ mocks }>
-      <Task task={ allTasks[ 1 ] } />
+      <Task task={ allTasks[ 1 ] } allTasks={ } />
     </MockedProvider>
   );
 } );

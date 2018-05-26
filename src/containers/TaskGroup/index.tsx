@@ -1,9 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 
-import gql from 'graphql-tag';
-import { Mutation, Query } from 'react-apollo';
+import Mutation from 'react-apollo/Mutation';
+import Query from 'react-apollo/Query';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { compose, withHandlers, withProps } from 'recompose';
 import styled from 'styled-components';
 
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight';
@@ -11,8 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ADD_GROUP_MUTATION } from 'app/graph/mutations';
 import { ALL_GROUPS_QUERY, ALL_TASKS_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
-import withMutation from 'app/graph/withMutation';
-import withQuery from 'app/graph/withQuery';
 
 import Icon from 'app/components/Icon';
 import InputHeader from 'app/components/InputHeader';
@@ -99,7 +96,7 @@ class TaskGroup extends React.Component<Props> {
                     <TaskGroupItemText>
                       { group.name }
         
-                      { this.aggregates( group.name ) }
+                      {/* { this.aggregates( group.name ) } */}
                     </TaskGroupItemText>
                   </TaskGroupItem>
                 ) ),
@@ -112,10 +109,7 @@ class TaskGroup extends React.Component<Props> {
   }
 }
 
-export default compose<InjectedProps, ExternalProps>(
-  withRouter,
-  withQuery( ALL_TASKS_QUERY ),
-)( TaskGroup );
+export default withRouter( TaskGroup );
 
 const TaskGroupItem = ListItem.extend`
   &:hover {

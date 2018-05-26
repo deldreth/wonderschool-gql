@@ -1,55 +1,34 @@
-import React from 'react';
+import * as React from 'react';
 
-import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare } from '@fortawesome/free-regular-svg-icons/faCheckSquare';
+import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare';
+import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { DateTime } from 'luxon';
-import compose from 'recompose/compose';
+import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
 import { UPDATE_TASK_MUTATION } from 'app/graph/mutations';
 import { ALL_TASKS_QUERY } from 'app/graph/queries';
-import withMutation from 'app/graph/withMutation';
-import withQuery from 'app/graph/withQuery';
 
 import Icon from 'app/components/Icon';
 import { ListItem, Loading } from 'app/components/Styles';
 import { Task as TaskType } from 'app/types';
 
-interface ExternalProps {
+export interface Props {
   task: TaskType;
-}
-
-export interface InjectedProps {
   allTasks: TaskType[];
-  loading: boolean;
-  updateTask: ( id: any ) => void;
-  onClick: ( locked: boolean ) => void;
 }
-
-export type Props = ExternalProps & InjectedProps;
-
-const renderIcon = function renderTaskIcon( task: TaskType, taskIsLocked: boolean ) {
-  if ( taskIsLocked ) {
-    return faLock;
-  }
-
-  if ( task.completedAt ) {
-    return faCheckSquare;
-  } else {
-    return faSquare;
-  }
-};
 
 class Task extends React.Component<Props> {
-  onClick = ( locked: boolean ) =>
+  onClick = ( updateTask: ( variables: any ) => void, locked: boolean ) =>
                  ( event: any ) => {
     if ( !locked ) {
-      this.props.updateTask( { variables: { 
+      updateTask( { variables: { 
         completedAt: this.props.task.completedAt ? null : DateTime.local().toISO(),
         id: this.props.task.id,
       } } );
 
-      this.resolveParentLocks( this.props.task.id, this.props.allTasks, this.props.updateTask );
+      this.resolveParentLocks( this.props.task.id, this.props.allTasks, updateTask );
     }
   }
 
@@ -63,7 +42,7 @@ class Task extends React.Component<Props> {
    */
   resolveParentLocks ( id: string,
                        allTasks: TaskType[],
-                       updateTask: Props['updateTask'] ) {
+                       updateTask: ( variables: any ) => void ) {
     const depends: string[] = [];
     // Recurse the dependency graph
     const parentIds = ( treeId: string ) => {
@@ -91,29 +70,38 @@ class Task extends React.Component<Props> {
     return locked;
   }
 
-  render () {
-    if ( this.props.loading ) {
-      return <Loading>...</Loading>;
+  renderIcon ( completedAt: DateTime | null | undefined, locked: boolean ) {
+    if ( locked ) {
+      return faLock;
     }
   
+    if ( completedAt ) {
+      return faCheckSquare;
+    } else {
+      return faSquare;
+    }
+  }
+
+  render () {
     const locked = this.resolveLocks( this.props.task.dependencyIds, this.props.allTasks );
     
     return (
-      <TaskItem
-        locked={ locked }
-        completed={ this.props.task.completedAt !== null }
-        onClick={ this.onClick( locked ) }>
-        <Icon icon={ renderIcon( this.props.task, locked ) }/>
-        { this.props.task.task }
-      </TaskItem>
+      <Mutation mutation={ UPDATE_TASK_MUTATION }>
+        { ( updateTask ) => (
+          <TaskItem
+            locked={ locked }
+            completed={ this.props.task.completedAt !== null }
+            onClick={ this.onClick( updateTask, locked ) }>
+            <Icon icon={ this.renderIcon( this.props.task.completedAt, locked ) }/>
+            { this.props.task.task }
+          </TaskItem>
+        ) }
+      </Mutation>
     );
   }
 }
 
-export default compose<InjectedProps, ExternalProps>(
-  withQuery( ALL_TASKS_QUERY ),
-  withMutation( UPDATE_TASK_MUTATION, 'updateTask' ),
-)( Task );
+export default Task;
 
 interface TaskItemProps {
   locked: boolean;

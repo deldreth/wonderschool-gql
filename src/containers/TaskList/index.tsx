@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
@@ -38,7 +38,10 @@ const TaskList = ( { match }: Props ) =>
             }
 
             return allTasks.map(
-              ( task: TaskType ) => <Task key={ task.id } task={ task }/>,
+              ( task: TaskType ) =>
+                <Task key={ task.id }
+                  task={ task }
+                  allTasks={ allTasks }/>,
             );
           }
         }

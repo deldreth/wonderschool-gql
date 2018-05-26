@@ -1,21 +1,32 @@
 import { hot } from 'react-hot-loader';
 
-import React from 'react';
+import * as React from 'react';
 
+const Loadable = require( 'react-loadable' );
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import TaskGroup from 'app/containers/TaskGroup';
-import TaskList from 'app/containers/TaskList';
+const AsyncTaskGroup = Loadable( {
+  loader: () => import( /* webpackChunkName: "task-group" */ './TaskGroup' ),
+  loading() {
+    return <div>Loading...</div>;
+  },
+} );
 
-function App () {
-  return (
+const AsyncTaskList = Loadable( {
+  loader: () => import( /* webpackChunkName: "task-list" */ './TaskList' ),
+  loading() {
+    return <div>Loading...</div>;
+  },
+} );
+
+const App = () =>
+  (
     <AppContainer>
-      <Route path="/" component={ TaskGroup }/>
-      <Route path="/group/:group" component={ TaskList }/>
+      <Route path="/" component={ AsyncTaskGroup }/>
+      <Route path="/group/:group" component={ AsyncTaskList }/>
     </AppContainer>
   );
-}
 
 export default hot( module )( App );
 

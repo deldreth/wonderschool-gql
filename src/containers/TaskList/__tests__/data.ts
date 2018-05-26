@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { Group as GroupType, Task as TaskType } from '../src/types';
+import { Group as GroupType, Task as TaskType } from 'app/types';
 
 interface MockGroup extends GroupType {
   __typename: string;
@@ -26,7 +26,6 @@ export const allTasks: MockTask[] = [
     Group: allGroups[ 0 ],
     task: 'Go to the bank',
     dependencyIds: [],
-    completedAt: null,
   },
   {
     __typename: 'Task',
@@ -34,7 +33,6 @@ export const allTasks: MockTask[] = [
     Group: allGroups[ 0 ],
     task: 'Fly One',
     dependencyIds: [1],
-    completedAt: null,
   },
   {
     __typename: 'Task',
