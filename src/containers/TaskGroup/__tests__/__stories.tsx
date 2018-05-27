@@ -6,8 +6,8 @@ import { MockedProvider } from 'react-apollo/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 
 import TaskGroup from 'app/containers/TaskGroup';
-import { allGroups } from 'app/containers/TaskGroup/__mocks';
-import { allTasks } from 'app/containers/TaskList/__mocks';
+import { allGroups } from 'app/containers/TaskGroup/__tests__/__mocks';
+import { allTasks } from 'app/containers/TaskList/__tests__/__mocks';
 import { ALL_GROUPS_QUERY, ALL_TASKS_QUERY } from 'app/graph/queries';
 
 // const stories = storiesOf( 'Group', module );

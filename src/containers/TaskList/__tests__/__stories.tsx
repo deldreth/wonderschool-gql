@@ -5,8 +5,8 @@ import { DateTime } from 'luxon';
 import { MockedProvider } from 'react-apollo/test-utils';
 
 import Task from 'app/components/Task';
-import { allGroups } from 'app/containers/TaskGroup/__mocks';
-import { allTasks } from 'app/containers/TaskList/__mocks';
+import { allGroups } from 'app/containers/TaskGroup/__tests__/__mocks';
+import { allTasks } from 'app/containers/TaskList/__tests__/__mocks';
 import { ALL_TASKS_QUERY } from 'app/graph/queries';
 import { Group as GroupType, Task as TaskType } from 'app/types';
 

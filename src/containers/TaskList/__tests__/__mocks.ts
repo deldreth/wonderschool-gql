@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { allGroups } from 'app/containers/TaskGroup/__mocks';
+import { allGroups } from 'app/containers/TaskGroup/__tests__/__mocks';
 import { Group, Task } from 'app/types';
 
 interface MockTask extends Task {

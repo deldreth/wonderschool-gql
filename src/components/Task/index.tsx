@@ -23,25 +23,30 @@ class Task extends React.Component<Props> {
   onClick = ( client: any, locked: boolean ) =>
                                                          ( event: any ) => {
     if ( !locked ) {
-      client.mutate( {
-        mutation: UPDATE_TASK_MUTATION,
-        variables: { 
-          completedAt: this.props.task.completedAt ? null : DateTime.local().toISO(),
-          id: this.props.task.id,
-        },
-      } );
+      let mutations: string[] = [];
 
       if ( this.props.task.completedAt ) {
-        const mutation = this.resolveParentLocks( this.props.task.id, this.props.allTasks );
-
-        client.mutate( {
-          mutation: gql`
-            mutation updateTasks {
-              ${ mutation }
-            }
-          `,
-        } );
+        mutations = this.resolveParentLocks( this.props.task.id, this.props.allTasks );
       }
+
+      const completedAt = this.props.task.completedAt ? null : `"${ DateTime.local().toISO() }"`;
+      mutations.push( `
+        task${ this.props.task.id }: updateTask(
+          id: ${ this.props.task.id },
+          completedAt: ${ completedAt })
+        {
+          id
+          completedAt
+        }
+      ` );
+
+      client.mutate( {
+        mutation: gql`
+          mutation updateTasks {
+            ${ mutations }
+          }
+        `,
+      } );
     }
   }
 
@@ -49,28 +54,31 @@ class Task extends React.Component<Props> {
    * resolveParentLocks - Iterate over all tasks and determine
    * parent relationship. If a parent is being placed in a locked state
    * then the task needs to be updated to reflect that.
+   * 
+   * @returns An array of template literal strings that will be resolved mutations
    */
-  resolveParentLocks ( id: string, allTasks: TaskType[] ) {
-    const depends: string[] = [];
+  resolveParentLocks ( parentId: string, allTasks: TaskType[] ): string[] {
     const mutations: string[] = [];
+
+    const depends: string[] = [];
     const parentIds = ( treeId: string ) => {
-      allTasks.forEach( task => {
-        if ( task.dependencyIds.includes( parseInt( treeId, 10 ) ) 
-             && !depends.includes( task.id ) && task.completedAt ) {
-          depends.push( task.id );
+      allTasks.forEach( ( { id, completedAt, dependencyIds } ) => {
+        if ( dependencyIds.includes( parseInt( treeId, 10 ) ) 
+             && !depends.includes( id ) && completedAt ) {
+          depends.push( id );
 
           mutations.push( `
-            task${ task.id }: updateTask(id: ${ task.id }, completedAt: null) {
+            task${ id }: updateTask(id: ${ id }, completedAt: null) {
               id
               completedAt
             }` );
 
-          return parentIds( task.id );
+          return parentIds( id );
         }
       } );
     };
 
-    parentIds( id );
+    parentIds( parentId );
 
     return mutations;
   }
