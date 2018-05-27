@@ -5,12 +5,12 @@ GraphQL based task management list. Data and a rudimentary generated schema for 
 ### Potential Improvement
 - [ ] Component specs
 - [x] resolveParentLocks' dependency graph generation be drastically improved with a better algorithm
-- [ ] Performance considerations for parent tree resolution for batch updates
-- [ ] Batch update mutations
+- [x] Performance considerations for parent tree resolution for batch updates
+- [x] Batch update mutations
 - [x] Composed HOCs to avoid arrow functions in renders (TaskList)
 - [ ] Structured graph dir as more types are added?
 - [ ] More informative loading states
-- [ ] Optimize production build
+- [x] Optimize production build
 
 # Get up and running
 ```

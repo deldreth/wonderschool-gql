@@ -1,10 +1,29 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
+export const ALL_TASKS_AND_GROUPS = gql`
+{
+  allGroups {
+    id
+    name
+  }
+  allTasks {
+    id
+    task
+    completedAt
+    dependencyIds
+    Group {
+      id
+    }
+  }
+}
+`;
+
 export const ALL_TASKS_QUERY = gql`
   {
     allTasks {
       id
+      task
       completedAt
       dependencyIds
       Group {

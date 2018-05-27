@@ -9,6 +9,7 @@ export const ListContainer = styled.div`
 interface ListItemProps {
   variant?: string;
   onClick?: ( event: SyntheticEvent<MouseEvent> ) => void;
+  hover?: boolean;
 }
 export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
   display: flex;
@@ -21,6 +22,8 @@ export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
         return 'flex-start';
     }
   } }
+
+  cursor: ${ props => props.hover ? 'pointer' : 'default' };
 
   height: 70px;
   border-bottom: thin solid lightgrey;

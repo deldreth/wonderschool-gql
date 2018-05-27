@@ -16,7 +16,9 @@ it( 'should render a Task component', () => {
   };
 
   const wrapper = shallow(
-    <Task task={ data } />,
+    <Task
+      task={ data }
+      allTasks={ [ data ] }/>,
   );
 
   expect( wrapper ).toMatchSnapshot();
