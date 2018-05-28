@@ -2,14 +2,16 @@ import * as React from 'react';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
+import { WithContext as ReactTags } from 'react-tag-input';
 import styled from 'styled-components';
 
 import { CREATE_TASK_MUTATION } from 'app/graph/mutations';
+import { ALL_TASKS_QUERY } from 'app/graph/queries';
 
 import Icon from 'app/components/Icon';
 import { Actions, Button, ListItem } from 'app/components/Styles';
-import { Group } from 'app/types';
+import { Group, Task } from 'app/types';
 
 export interface Props {
   group: Group['id'];
@@ -21,6 +23,7 @@ class CreateTask extends React.Component<Props> {
   state = {
     adding: false,
     newTask: '',
+    newTaskDeps: [],
   };
 
   toggleAdding = () => this.setState( { adding: !this.state.adding } );
@@ -31,12 +34,14 @@ class CreateTask extends React.Component<Props> {
 
   create = ( createTask: ( variables: any ) => void ) => 
     ( event: React.MouseEvent<HTMLDivElement> ) => {
+    const dependencyIds = this.state.newTaskDeps.map( ( task: Task ) => task.id );
+
     createTask( { variables: {
       id: this.props.nextTask,
       group_id: this.props.group,
       task: this.state.newTask,
       completedAt: null,
-      dependencyIds: [],
+      dependencyIds,
     } } );
 
     this.setState( {
@@ -46,6 +51,40 @@ class CreateTask extends React.Component<Props> {
 
     this.props.postAdd();
   }
+
+  renderTags = () =>
+    (
+      <Query query={ ALL_TASKS_QUERY }>
+      { ( { loading, data: { allTasks } } ) => {
+        if ( loading ) {
+          return '...';
+        }
+
+        const suggestions = allTasks.map( task => ( {
+          id: task.id,
+          text: task.task,
+        } ) );
+
+        return (
+          <ReactTags
+            placeholder="Search for Dependencies"
+            tags={ this.state.newTaskDeps }
+            suggestions={ suggestions }
+            handleAddition={ ( tag: string ) =>
+              this.setState( { newTaskDeps: [
+                ...this.state.newTaskDeps,
+                tag,
+              ] } )
+            }
+            handleDelete={ ( id: number ) => {
+              this.setState( { 
+                newTaskDeps: this.state.newTaskDeps.filter( ( task, index ) => index !== id ),
+              } );
+            } }/>
+        );
+      } }
+      </Query>
+    )
 
   render () {
     if ( this.state.adding ) {
@@ -58,9 +97,7 @@ class CreateTask extends React.Component<Props> {
                 type="text"
                 onChange={ this.onChange }/>
 
-              <input
-                placeholder="Dependencies"
-                type="text" />
+              { this.renderTags() }
 
               <Actions>
                 <Button onClick={ this.toggleAdding }>

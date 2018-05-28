@@ -11,6 +11,10 @@ const rules = [
   {
     test: /\.svg$/,
     use: 'url-loader'
+  },
+  {
+    test: /\.css$/,
+    use: [ 'style-loader', 'css-loader' ]
   }
 ];
 

@@ -6,6 +6,8 @@ import { HashRouter as Router } from 'react-router-dom';
 import App from 'app/containers/App';
 import client from 'app/graph/client';
 
+import '../static/reactTags.css';
+
 ReactDOM.render(
   <Router>
     <ApolloProvider client={ client }>
