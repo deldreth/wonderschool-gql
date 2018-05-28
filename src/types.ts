@@ -6,7 +6,7 @@ export interface Task {
   Group: Group;
   task: string;
   dependencyIds: number[];
-  completedAt?: DateTime;
+  completedAt: DateTime | null;
 }
 
 export interface Group {

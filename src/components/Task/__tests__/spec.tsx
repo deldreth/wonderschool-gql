@@ -13,6 +13,7 @@ it( 'should render a Task component', () => {
     },
     task: 'Go to the bank',
     dependencyIds: [1],
+    completedAt: null,
   };
 
   const wrapper = shallow(

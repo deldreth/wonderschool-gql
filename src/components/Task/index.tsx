@@ -94,7 +94,7 @@ class Task extends React.Component<Props> {
     return locked;
   }
 
-  renderIcon ( completedAt: DateTime | undefined, locked: boolean ) {
+  renderIcon ( completedAt: DateTime | null, locked: boolean ) {
     if ( locked ) {
       return faLock;
     }
@@ -114,7 +114,7 @@ class Task extends React.Component<Props> {
         { ( client ) => (
           <TaskItem
             locked={ locked }
-            completed={ this.props.task.completedAt !== null }
+            completed={ this.props.task.completedAt }
             onClick={ this.onClick( client, locked ) }>
             <Icon icon={ this.renderIcon( this.props.task.completedAt, locked ) }/>
             { this.props.task.task }

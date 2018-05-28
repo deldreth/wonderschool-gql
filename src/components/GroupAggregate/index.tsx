@@ -12,7 +12,7 @@ export interface Props {
 const GroupAggregate = ( { group }: Props ) => (
   <Query query={ GROUP_TASKS_QUERY } variables={{ group }}>
     { ( { loading, data: { allTasks } } ) => {
-      if ( loading ) {
+      if ( loading || ( allTasks && !allTasks.length ) ) {
         return null;
       }
       

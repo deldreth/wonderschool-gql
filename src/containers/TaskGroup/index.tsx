@@ -15,15 +15,11 @@ import InputHeader from 'app/components/InputHeader';
 import { ListContainer, ListItem, Loading } from 'app/components/Styles';
 import { Group, Task } from 'app/types';
 
-interface ExternalProps {
-}
-
 export interface InjectedProps {
-  loading: boolean;
   routeTo: ( path: string ) => () => void;
 }
 
-export type Props = ExternalProps & InjectedProps & RouteComponentProps<any>;
+export type Props = InjectedProps & RouteComponentProps<any>;
 
 class TaskGroup extends React.Component<Props> {
   routeTo = ( value: string )  => () => {
@@ -67,7 +63,7 @@ class TaskGroup extends React.Component<Props> {
   }
 }
 
-export default withRouter( TaskGroup );
+export default withRouter<Props>( TaskGroup );
 
 const GroupText = styled.div`
 `;
