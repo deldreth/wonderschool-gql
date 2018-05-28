@@ -12,6 +12,7 @@ ShallowWrapper {
             "id": "1",
             "name": "Purchases",
           },
+          "completedAt": null,
           "dependencyIds": Array [
             1,
           ],
@@ -26,6 +27,7 @@ ShallowWrapper {
           "id": "1",
           "name": "Purchases",
         },
+        "completedAt": null,
         "dependencyIds": Array [
           1,
         ],

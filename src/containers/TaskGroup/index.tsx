@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Query from 'react-apollo/Query';
+import { Query } from 'react-apollo';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 

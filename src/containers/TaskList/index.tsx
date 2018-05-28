@@ -9,7 +9,7 @@ import { ListContainer, ListItem, Loading } from 'app/components/Styles';
 import Task from 'app/components/Task';
 import { Task as TaskType } from 'app/types';
 
-export type Props = RouteComponentProps<any>;
+export type Props = Pick<RouteComponentProps<any>, 'match'>;
 
 const TaskList = ( { match }: Props ) =>
   (

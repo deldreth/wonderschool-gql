@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Query from 'react-apollo/Query';
+import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
 import { GROUP_TASKS_QUERY } from 'app/graph/queries';

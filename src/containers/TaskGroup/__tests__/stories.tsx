@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import TaskGroup from 'app/containers/TaskGroup';
 import { ALL_GROUPS_QUERY, ALL_TASKS_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
+import { mockQuery } from '../../../../stories/utils';
 
 const mockRouteTo = ( path: string ) => () => null;
 
@@ -16,11 +17,6 @@ stories.addDecorator( story => (
     { story() }
   </MemoryRouter>
 ) );
-
-const mockQuery = ( query: string, data: any, variables?: any ) => ( {
-  request: { query, variables },
-  result: { data },
-} );
 
 stories.add( 'No groups', () => {
   const mocks: any = [

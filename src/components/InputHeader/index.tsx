@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { faPlusCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Mutation from 'react-apollo/Mutation';
+import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
 import { ADD_GROUP_MUTATION } from 'app/graph/mutations';
