@@ -29,7 +29,7 @@ class TaskGroup extends React.Component<Props> {
   render () {
     return (
       <ListContainer>
-        <Query query={ ALL_GROUPS_QUERY }>
+        <Query query={ ALL_GROUPS_QUERY } pollInterval={ 1000 }>
           { ( { loading, data: { allGroups }, refetch } ) => {
             if ( loading ) {
               return <Loading>...</Loading>;

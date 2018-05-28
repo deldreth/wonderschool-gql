@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import { faPlusCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 import { Mutation } from 'react-apollo';
-import styled from 'styled-components';
 
 import { CREATE_GROUP_MUTATION } from 'app/graph/mutations';
 
@@ -72,6 +71,7 @@ export default class InputHeader extends React.Component<Props> {
           { ( createGroup ) => (
             <ListItem variant="header">
               <input
+                placeholder="Group"
                 type="text"
                 autoFocus
                 value={ this.state.nextItemValue }
@@ -93,7 +93,9 @@ export default class InputHeader extends React.Component<Props> {
       );
     } else {
       return (
-        <ListItem variant="header"
+        <ListItem
+        variant="header"
+          hover
           onClick={ this.toggleAdding }>
           Things To Do
           <Icon

@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { ALL_TASKS_QUERY, GROUP_NAME_QUERY } from 'app/graph/queries';
 
+import CreateTask from 'app/components/CreateTask';
 import { ListContainer, ListItem, Loading } from 'app/components/Styles';
 import Task from 'app/components/Task';
 import { Task as TaskType } from 'app/types';
@@ -43,6 +44,20 @@ const TaskList = ( { match }: Props ) =>
         } }
       </Query>
 
+      <Query query={ ALL_TASKS_QUERY }>
+        { ( { loading, data: { allTasks }, refetch } ) => {
+          if ( loading ) {
+            return <Loading>...</Loading>;
+          }
+
+          return (
+            <CreateTask 
+              group={ match.params.group }
+              nextTask={ allTasks.length + 1 }
+              postAdd={ refetch }/>
+          );
+        } }
+      </Query>
     </ListContainer>
   );
 
