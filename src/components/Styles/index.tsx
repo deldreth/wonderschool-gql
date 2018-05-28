@@ -47,11 +47,5 @@ export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
   }
 `;
 
-export const Icon = styled.div`
-  margin-right: 16px;
-  width: 30px;
-  text-align: center;
-`;
-
 export const Loading = styled.div`
 `;

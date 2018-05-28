@@ -51,7 +51,7 @@ export const GROUP_NAME_QUERY = gql`
   }
 `;
 
-export const GROUP_TASKS_QUERY = gql`
+export const ALL_TASKS_BY_GROUP_QUERY = gql`
   query allTasksByGroup($group: ID!) {
     allTasks(filter: { group_id: $group }) {
       id

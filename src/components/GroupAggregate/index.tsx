@@ -3,14 +3,14 @@ import * as React from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
-import { GROUP_TASKS_QUERY } from 'app/graph/queries';
+import { ALL_TASKS_BY_GROUP_QUERY } from 'app/graph/queries';
 
 export interface Props {
   group: string;
 }
 
 const GroupAggregate = ( { group }: Props ) => (
-  <Query query={ GROUP_TASKS_QUERY } variables={{ group }}>
+  <Query query={ ALL_TASKS_BY_GROUP_QUERY } variables={{ group }}>
     { ( { loading, data: { allTasks } } ) => {
       if ( loading || ( allTasks && !allTasks.length ) ) {
         return null;

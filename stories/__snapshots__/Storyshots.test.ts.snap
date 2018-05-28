@@ -1,8 +1,80 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Icon Normal 1`] = `
+<div
+  className="sc-bdVaJa lnsbnA"
+  onClick={undefined}
+>
+  <svg
+    aria-hidden="true"
+    className="svg-inline--fa fa-compass fa-w-16 "
+    data-icon="compass"
+    data-prefix="fas"
+    role="img"
+    style={Object {}}
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM307.446 120.844l-102.642 97.779a23.997 23.997 0 0 0-6.772 11.729l-33.359 137.779c-5.68 23.459 22.777 39.318 39.88 23.024l102.64-97.779a23.99 23.99 0 0 0 6.772-11.729l33.359-137.779c5.618-23.198-22.591-39.493-39.878-23.024zM256 224c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32z"
+      fill="currentColor"
+      style={Object {}}
+    />
+  </svg>
+</div>
+`;
+
+exports[`Storyshots Icon Right variant 1`] = `
+<div
+  className="sc-bdVaJa kHRcZY"
+  onClick={undefined}
+>
+  <svg
+    aria-hidden="true"
+    className="svg-inline--fa fa-compass fa-w-16 "
+    data-icon="compass"
+    data-prefix="fas"
+    role="img"
+    style={Object {}}
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM307.446 120.844l-102.642 97.779a23.997 23.997 0 0 0-6.772 11.729l-33.359 137.779c-5.68 23.459 22.777 39.318 39.88 23.024l102.64-97.779a23.99 23.99 0 0 0 6.772-11.729l33.359-137.779c5.618-23.198-22.591-39.493-39.878-23.024zM256 224c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32z"
+      fill="currentColor"
+      style={Object {}}
+    />
+  </svg>
+</div>
+`;
+
+exports[`Storyshots Styles List container 1`] = `
+<div
+  className="sc-bwzfXH dhKoUn"
+>
+  Content
+</div>
+`;
+
+exports[`Storyshots Styles List item 1`] = `
+<div
+  className="sc-htpNat jsjUsa"
+>
+  Item
+</div>
+`;
+
+exports[`Storyshots Styles List item header variant 1`] = `
+<div
+  className="sc-htpNat jqHrvy"
+>
+  Header
+</div>
+`;
+
 exports[`Storyshots Task Completed 1`] = `
 <div
-  className="sc-EHOje godpWe sc-htpNat jsjUsa"
+  className="sc-ifAKCX jNhrOB sc-htpNat jsjUsa"
   onClick={[Function]}
 >
   <div
@@ -35,7 +107,7 @@ exports[`Storyshots Task Group Multiple groups, one new 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -47,7 +119,7 @@ exports[`Storyshots Task Group New group 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -59,7 +131,7 @@ exports[`Storyshots Task Group No groups 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -71,7 +143,7 @@ exports[`Storyshots Task Group With aggregates 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -83,12 +155,12 @@ exports[`Storyshots Task List All unlocked 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -100,12 +172,12 @@ exports[`Storyshots Task List Second depends on the first 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -117,12 +189,12 @@ exports[`Storyshots Task List Third completed 1`] = `
   className="sc-bwzfXH dhKoUn"
 >
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
   <div
-    className="sc-ifAKCX bmKgXx"
+    className="sc-bxivhb eBNJKg"
   >
     ...
   </div>
@@ -131,7 +203,7 @@ exports[`Storyshots Task List Third completed 1`] = `
 
 exports[`Storyshots Task Locked 1`] = `
 <div
-  className="sc-EHOje gGmIEY sc-htpNat jsjUsa"
+  className="sc-ifAKCX fjKlOc sc-htpNat jsjUsa"
   onClick={[Function]}
 >
   <div
@@ -161,7 +233,7 @@ exports[`Storyshots Task Locked 1`] = `
 
 exports[`Storyshots Task Unlocked 1`] = `
 <div
-  className="sc-EHOje coquBt sc-htpNat jsjUsa"
+  className="sc-ifAKCX jsvRg sc-htpNat jsjUsa"
   onClick={[Function]}
 >
   <div

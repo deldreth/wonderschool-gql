@@ -14,7 +14,7 @@ export const UPDATE_TASK_MUTATION = gql`
   }
 `;
 
-export const ADD_GROUP_MUTATION = gql`
+export const CREATE_GROUP_MUTATION = gql`
   mutation createGroup( $id: ID!, $name: String! ) {
     createGroup( id: $id, name: $name ) {
       id

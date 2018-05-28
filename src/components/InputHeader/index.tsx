@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
-import { ADD_GROUP_MUTATION } from 'app/graph/mutations';
+import { CREATE_GROUP_MUTATION } from 'app/graph/mutations';
 
 import Icon from 'app/components/Icon';
 import { ListItem } from 'app/components/Styles';
@@ -64,7 +64,7 @@ export default class InputHeader extends React.Component<Props> {
   render () {
     if ( this.state.adding ) {
       return (
-        <Mutation mutation={ ADD_GROUP_MUTATION }>
+        <Mutation mutation={ CREATE_GROUP_MUTATION }>
           { ( createGroup ) => (
             <ListItem variant="header">
               <input

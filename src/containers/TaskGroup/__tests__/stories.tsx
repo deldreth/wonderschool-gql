@@ -6,7 +6,7 @@ import { MockedProvider } from 'react-apollo/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 
 import TaskGroup from 'app/containers/TaskGroup';
-import { ALL_GROUPS_QUERY, ALL_TASKS_QUERY, GROUP_TASKS_QUERY } from 'app/graph/queries';
+import { ALL_GROUPS_QUERY, ALL_TASKS_BY_GROUP_QUERY, ALL_TASKS_QUERY } from 'app/graph/queries';
 import { mockQuery } from '../../../../stories/utils';
 
 const mockRouteTo = ( path: string ) => () => null;
@@ -38,7 +38,7 @@ stories.add( 'New group', () => {
         { __typename: 'Group', id: '1', name: 'Group 1' },
       ] },
     ),
-    mockQuery( GROUP_TASKS_QUERY, { allTasks: [] }, { group: '1' } ),
+    mockQuery( ALL_TASKS_BY_GROUP_QUERY, { allTasks: [] }, { group: '1' } ),
   ];
 
   return (
@@ -57,7 +57,7 @@ stories.add( 'With aggregates', () => {
       ] },
     ),
     mockQuery(
-      GROUP_TASKS_QUERY,
+      ALL_TASKS_BY_GROUP_QUERY,
       { allTasks: [
         { __typename: 'Task', id: '1', task: '1 - 1', completedAt: DateTime.local(), dependencyIds: [] },
         { __typename: 'Task', id: '2', task: '1 - 2', completedAt: null, dependencyIds: [] },
@@ -83,14 +83,14 @@ stories.add( 'Multiple groups, one new', () => {
       ] },
     ),
     mockQuery(
-      GROUP_TASKS_QUERY,
+      ALL_TASKS_BY_GROUP_QUERY,
       { allTasks: [
         { __typename: 'Task', id: '1', task: '1 - 1', completedAt: DateTime.local(), dependencyIds: [] },
         { __typename: 'Task', id: '2', task: '1 - 2', completedAt: null, dependencyIds: [] },
       ] },
       { group: '1' },
     ),
-    mockQuery( GROUP_TASKS_QUERY, { allTasks: [] }, { group: '2' } ),
+    mockQuery( ALL_TASKS_BY_GROUP_QUERY, { allTasks: [] }, { group: '2' } ),
   ];
 
   return (
