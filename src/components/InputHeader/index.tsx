@@ -43,6 +43,10 @@ export default class InputHeader extends React.Component<Props> {
       
       this.props.postAdd();
     }
+
+    if ( event.key === 'Escape' ) {
+      this.toggleAdding();
+    }
   }
 
   onAddClick = ( createGroup: ( variables: any ) => void ) => 
@@ -72,7 +76,7 @@ export default class InputHeader extends React.Component<Props> {
                 autoFocus
                 value={ this.state.nextItemValue }
                 onChange={ this.onChange }
-                onKeyPress={ this.onCreateItem( createGroup ) }/>
+                onKeyDown={ this.onCreateItem( createGroup ) }/>
 
               <Icon
                 variant="right"
