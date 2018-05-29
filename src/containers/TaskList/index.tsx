@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { ALL_TASKS_QUERY, GROUP_NAME_QUERY } from 'app/graph/queries';
 
@@ -14,7 +15,7 @@ export type Props = Pick<RouteComponentProps<any>, 'match'>;
 
 const TaskList = ( { match }: Props ) =>
   (
-    <ListContainer>
+    <TaskListContainer>
       <Query query={ GROUP_NAME_QUERY } variables={ { id: match.params.group } }>
         { ( { loading, data: { Group } } ) => {
           if ( loading ) {
@@ -58,7 +59,15 @@ const TaskList = ( { match }: Props ) =>
           );
         } }
       </Query>
-    </ListContainer>
+    </TaskListContainer>
   );
 
 export default TaskList;
+
+const TaskListContainer = ListContainer.extend`
+  grid-column: 7 / 13;
+
+  @media only screen and (min-width: 768px) {
+    grid-column: 5 / 9;
+  }
+`;

@@ -11,6 +11,7 @@ import { ALL_TASKS_QUERY } from 'app/graph/queries';
 
 import Icon from 'app/components/Icon';
 import { Actions, Button, ListItem } from 'app/components/Styles';
+import TaskTags from 'app/components/TaskTags';
 import { Group, Task } from 'app/types';
 
 export interface Props {
@@ -47,44 +48,20 @@ class CreateTask extends React.Component<Props> {
     this.setState( {
       adding: false,
       newTask: '',
+      newTaskDeps: [],
     } );
 
     this.props.postAdd();
   }
 
-  renderTags = () =>
-    (
-      <Query query={ ALL_TASKS_QUERY }>
-      { ( { loading, data: { allTasks } } ) => {
-        if ( loading ) {
-          return '...';
-        }
+  handleAddition = ( tag: string ) => this.setState( { newTaskDeps: [
+    ...this.state.newTaskDeps,
+    tag,
+  ] } )
 
-        const suggestions = allTasks.map( task => ( {
-          id: task.id,
-          text: task.task,
-        } ) );
-
-        return (
-          <ReactTags
-            placeholder="Search for Dependencies"
-            tags={ this.state.newTaskDeps }
-            suggestions={ suggestions }
-            handleAddition={ ( tag: string ) =>
-              this.setState( { newTaskDeps: [
-                ...this.state.newTaskDeps,
-                tag,
-              ] } )
-            }
-            handleDelete={ ( id: number ) => {
-              this.setState( { 
-                newTaskDeps: this.state.newTaskDeps.filter( ( task, index ) => index !== id ),
-              } );
-            } }/>
-        );
-      } }
-      </Query>
-    )
+  handleDeletion = ( i: number ) => this.setState( { 
+    newTaskDeps: this.state.newTaskDeps.filter( ( task, index ) => index !== i ),
+  } )
 
   render () {
     if ( this.state.adding ) {
@@ -93,11 +70,15 @@ class CreateTask extends React.Component<Props> {
           { ( createTask ) => (
             <ListItemDown>
               <input
+                autoFocus
                 placeholder="Task"
                 type="text"
                 onChange={ this.onChange }/>
 
-              { this.renderTags() }
+              <TaskTags 
+                tags={ this.state.newTaskDeps }
+                handleAddition={ this.handleAddition }
+                handleDeletion={ this.handleDeletion }/>
 
               <Actions>
                 <Button onClick={ this.toggleAdding }>
@@ -141,4 +122,8 @@ const ListItemDown = ListItem.extend`
   height: auto;
 
   padding: 16px 0px;
+
+  input {
+    margin: 0px 0px 16px 0px;
+  }
 `;

@@ -63,7 +63,7 @@ module.exports = {
       id: 8,
       group_id: 2,
       task: 'Have a snack',
-      dependencyIds: [11],
+      dependencyIds: [],
       completedAt: null,
     },
   ]

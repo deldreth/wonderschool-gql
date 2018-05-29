@@ -31,5 +31,20 @@ const App = () =>
 export default hot( module )( App );
 
 const AppContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 16px;
+
+  max-width: 768px;
+  margin-left: 16px;
+  margin-right: 16px;
+  // padding: 0px 16px;
+
+  @media only screen and (min-width: 768px) {
+    column-gap: 32px;
+    max-width: 992px;
+    margin-left: auto;
+    margin-right: auto;
+    // padding: 0px 32px;
+  }
 `;

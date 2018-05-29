@@ -2,8 +2,6 @@ import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 export const ListContainer = styled.div`
-  width: 370px;
-  margin: 16px;
 `;
 
 interface ListItemProps {
@@ -38,11 +36,11 @@ export const ListItem = styled<ListItemProps, 'div'>( 'div' )`
   } }
 
   input {
-    padding: 16px 8px;
+    padding: 8px 8px;
     width: 100%;
     box-sizing: border-box;
     font-size: 14px;
-    margin: 0px 0px 16px 0px;
+    margin: 0px 0px 0px 0px;
   }
 
   .icon {
@@ -54,9 +52,6 @@ export const Loading = styled.div`
 `;
 
 export const Actions = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
 `;
 
 export const Button = styled.div`

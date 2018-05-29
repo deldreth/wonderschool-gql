@@ -28,7 +28,7 @@ class TaskGroup extends React.Component<Props> {
 
   render () {
     return (
-      <ListContainer>
+      <TaskGroupContainer>
         <Query query={ ALL_GROUPS_QUERY } pollInterval={ 1000 }>
           { ( { loading, data: { allGroups }, refetch } ) => {
             if ( loading ) {
@@ -58,7 +58,7 @@ class TaskGroup extends React.Component<Props> {
             ];
           } }
         </Query>
-      </ListContainer>
+      </TaskGroupContainer>
     );
   }
 }
@@ -66,4 +66,12 @@ class TaskGroup extends React.Component<Props> {
 export default withRouter<Props>( TaskGroup );
 
 const GroupText = styled.div`
+`;
+
+const TaskGroupContainer = ListContainer.extend`
+  grid-column: 1 / 7;
+
+  @media only screen and (min-width: 768px) {
+    grid-column: 1 / 5;
+  }
 `;
