@@ -52,6 +52,11 @@ export const Loading = styled.div`
 `;
 
 export const Actions = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
+
+  width: 100%;
 `;
 
 export const Button = styled.div`

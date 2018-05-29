@@ -36,15 +36,11 @@ const AppContainer = styled.div`
   column-gap: 16px;
 
   max-width: 768px;
-  margin-left: 16px;
-  margin-right: 16px;
-  // padding: 0px 16px;
+  margin: 0px 16px 0px 16px;
 
   @media only screen and (min-width: 768px) {
     column-gap: 32px;
     max-width: 992px;
-    margin-left: auto;
-    margin-right: auto;
-    // padding: 0px 32px;
+    margin: 0px auto 0px auto;
   }
 `;

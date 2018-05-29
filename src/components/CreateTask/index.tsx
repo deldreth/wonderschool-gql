@@ -100,10 +100,12 @@ class CreateTask extends React.Component<Props> {
         <ListItemRight
           hover
           onClick={ this.toggleAdding }>
-          <Button>
-            <Icon icon={ faPlusCircle } />
-            New Task
-          </Button>
+          <Actions>
+            <Button style={{ gridColumn: 2 }}>
+              <Icon icon={ faPlusCircle } />
+              New Task
+            </Button>
+          </Actions>
         </ListItemRight>
       );
     }
