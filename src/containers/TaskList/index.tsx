@@ -46,7 +46,7 @@ const TaskList = ( { match }: Props ) =>
       </Query>
 
       <Query query={ ALL_TASKS_QUERY }>
-        { ( { loading, data: { allTasks }, refetch } ) => {
+        { ( { loading, data: { allTasks } } ) => {
           if ( loading ) {
             return <Loading>...</Loading>;
           }
@@ -54,8 +54,7 @@ const TaskList = ( { match }: Props ) =>
           return (
             <CreateTask 
               group={ match.params.group }
-              nextTask={ allTasks.length + 1 }
-              postAdd={ refetch }/>
+              nextTask={ allTasks.length + 1 }/>
           );
         } }
       </Query>

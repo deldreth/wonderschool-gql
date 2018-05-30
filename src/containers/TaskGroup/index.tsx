@@ -29,8 +29,8 @@ class TaskGroup extends React.Component<Props> {
   render () {
     return (
       <TaskGroupContainer>
-        <Query query={ ALL_GROUPS_QUERY } pollInterval={ 1000 }>
-          { ( { loading, data: { allGroups }, refetch } ) => {
+        <Query query={ ALL_GROUPS_QUERY }>
+          { ( { loading, data: { allGroups } } ) => {
             if ( loading ) {
               return <Loading>...</Loading>;
             }
@@ -38,8 +38,7 @@ class TaskGroup extends React.Component<Props> {
             return [
               <InputHeader
                 key="input-header"
-                nextId={ allGroups.length + 1 }
-                postAdd={ refetch }/>,
+                nextId={ allGroups.length + 1 }/>,
 
               allGroups.map( ( group: Group ) => (
                 <ListItem

@@ -7,7 +7,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import styled from 'styled-components';
 
 import { CREATE_TASK_MUTATION } from 'app/graph/mutations';
-import { ALL_TASKS_QUERY } from 'app/graph/queries';
+import { ALL_GROUPS_QUERY, ALL_TASKS_BY_GROUP_QUERY, ALL_TASKS_QUERY } from 'app/graph/queries';
 
 import Icon from 'app/components/Icon';
 import { Actions, Button, ListItem } from 'app/components/Styles';
@@ -17,7 +17,6 @@ import { Group, Task } from 'app/types';
 export interface Props {
   group: Group['id'];
   nextTask: number;
-  postAdd: ( ...args: any[] ) => void;
 }
 
 class CreateTask extends React.Component<Props> {
@@ -50,8 +49,6 @@ class CreateTask extends React.Component<Props> {
       newTask: '',
       newTaskDeps: [],
     } );
-
-    this.props.postAdd();
   }
 
   handleAddition = ( tag: string ) => this.setState( { newTaskDeps: [
@@ -66,7 +63,12 @@ class CreateTask extends React.Component<Props> {
   render () {
     if ( this.state.adding ) {
       return (
-        <Mutation mutation={ CREATE_TASK_MUTATION }>
+        <Mutation
+          mutation={ CREATE_TASK_MUTATION }
+          refetchQueries={ [
+            { query: ALL_TASKS_QUERY },
+            { query: ALL_TASKS_BY_GROUP_QUERY, variables: { group: this.props.group} },
+          ] }>
           { ( createTask ) => (
             <ListItemDown>
               <input

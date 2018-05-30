@@ -5,13 +5,13 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 import { Mutation } from 'react-apollo';
 
 import { CREATE_GROUP_MUTATION } from 'app/graph/mutations';
+import { ALL_GROUPS_QUERY } from 'app/graph/queries';
 
 import Icon from 'app/components/Icon';
 import { ListItem } from 'app/components/Styles';
 
 interface Props {
   nextId: number;
-  postAdd: () => void;
 }
 
 export default class InputHeader extends React.Component<Props> {
@@ -39,8 +39,6 @@ export default class InputHeader extends React.Component<Props> {
       } } );
 
       this.setState( { nextItemValue: '' } );
-      
-      this.props.postAdd();
     }
 
     if ( event.key === 'Escape' ) {
@@ -59,15 +57,15 @@ export default class InputHeader extends React.Component<Props> {
       } } );
 
       this.setState( { nextItemValue: '' } );
-
-      this.props.postAdd();
     }
   }
 
   render () {
     if ( this.state.adding ) {
       return (
-        <Mutation mutation={ CREATE_GROUP_MUTATION }>
+        <Mutation
+          mutation={ CREATE_GROUP_MUTATION }
+          refetchQueries={ [ { query: ALL_GROUPS_QUERY } ] }>
           { ( createGroup ) => (
             <ListItem variant="header">
               <input
