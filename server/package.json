@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "deploy": "serverless deploy"
+  },
   "devDependencies": {
     "serverless": "^1.27.3",
     "serverless-appsync-plugin": "^1.0.0",
