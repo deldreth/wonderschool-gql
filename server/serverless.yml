@@ -1,0 +1,143 @@
+service: wonderschool-gql-server
+
+frameworkVersion: ">=1.21.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-east-1
+
+plugins:
+  - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-appsync-plugin
+
+custom:
+  accountId: ACCOUNT_ID
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: false
+      migrate: true
+      seed: true
+  appSync:
+    authenticationType: API_KEY
+    mappingTemplates:
+      - dataSource: Groups
+        type: Query
+        field: Group
+        request: "Group-request.txt"
+        response: "Group-response.txt"
+      - dataSource: Groups
+        type: Query
+        field: allGroups
+        request: "allGroups-request.txt"
+        response: "allGroups-response.txt"
+      - dataSource: Tasks
+        type: Query
+        field: Task
+        request: "Task-request.txt"
+        response: "Task-response.txt"
+      - dataSource: Tasks
+        type: Query
+        field: allTasks
+        request: "allTasks-request.txt"
+        response: "allTasks-response.txt"
+    serviceRole: "AppSyncServiceRole"
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: Groups
+        description: 'Groups table'
+        config:
+          tableName: 'Groups'
+          serviceRoleArn: "arn:aws:iam::${self:custom.accountId}:role/Dynamo-${self:custom.appSync.serviceRole}"
+      - type: AMAZON_DYNAMODB
+        name: Tasks
+        description: 'Tasks table'
+        config:
+          tableName: 'Tasks'
+          serviceRoleArn: "arn:aws:iam::${self:custom.accountId}:role/Dynamo-${self:custom.appSync.serviceRole}"
+
+resources:
+  Resources:
+    GroupsTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: "Groups"
+    TasksTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+          -
+            AttributeName: group_id
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: "Tasks"
+        GlobalSecondaryIndexes:
+          -
+            IndexName: group-tasks
+            KeySchema:
+              -
+                AttributeName: group_id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+    AppSyncServiceRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+          RoleName: "Dynamo-AppSyncServiceRole"
+          AssumeRolePolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Principal:
+                  Service:
+                    - "appsync.amazonaws.com"
+                Action:
+                  - "sts:AssumeRole"
+          Policies:
+            -
+              PolicyName: "Dynamo-AppSyncServiceRole-Policy"
+              PolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                  -
+                    Effect: "Allow"
+                    Action:
+                      - "dynamodb:Query"
+                      - "dynamodb:BatchWriteItem"
+                      - "dynamodb:GetItem"
+                      - "dynamodb:DeleteItem"
+                      - "dynamodb:PutItem"
+                      - "dynamodb:Scan"
+                      - "dynamodb:UpdateItem"
+                    Resource:
+                      - "arn:aws:dynamodb:us-east-1:*:table/Groups"
+                      - "arn:aws:dynamodb:us-east-1:*:table/Groups/*"
+                      - "arn:aws:dynamodb:us-east-1:*:table/Tasks"
+                      - "arn:aws:dynamodb:us-east-1:*:table/Tasks/*"
