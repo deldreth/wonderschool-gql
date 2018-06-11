@@ -11,12 +11,12 @@ type Task {
   completedAt: String
 }
 
-type GroupFilter {
+input GroupFilter {
   ids: [ID]
   id: ID
-};
+}
 
-type TaskFilter {
+input TaskFilter {
   ids: [ID]
   id: ID
   group_id: ID
