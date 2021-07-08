@@ -1,0 +1,63 @@
+type Group {
+  id: ID!
+  name: String
+}
+
+type Task {
+  id: ID!
+  group_id: ID!
+  task: String!
+  dependencyIds: [ID]
+  completedAt: String
+}
+
+input GroupFilter {
+  ids: [ID]
+  id: ID
+}
+
+input TaskFilter {
+  ids: [ID]
+  id: ID
+  group_id: ID
+  task: String
+  dependencyIds: [ID]
+  completedAt: String
+}
+
+type Query {
+  Group(id: ID): Group
+  allGroups(
+    filter: GroupFilter
+  ): [Group]
+
+  Task(id: ID): Task
+  allTasks(
+    filter: TaskFilter
+  ): [Task]
+}
+
+type Mutation {
+  createGroup(id: ID!name: String!): Group
+
+  createTask(
+    id: ID!
+    group_id: ID!
+    task: String!
+    dependencyIds: [ID]!
+    completedAt: String
+  ): Task
+
+  updateTask(
+    id: ID!
+    group_id: ID
+    task: String
+    dependencyIds: [ID]
+    completedAt: String
+  ): Task
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
